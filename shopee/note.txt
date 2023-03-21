@@ -1,0 +1,12 @@
+base.css:
+    bien 
+    box sizing
+    font-size
+    line-height
+    font-family
+    grid (width center)
+
+
+header:
+    grid: 1200 
+

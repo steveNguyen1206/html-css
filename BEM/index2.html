@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style2.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Document</title>
+</head>
+<body>
+
+
+    <!-- success -->
+
+    <div id="toast">
+    </div>
+    
+    <div>
+        <div onclick="ShowSuccessToast();" class="btn btn--success">Show success toast</div>
+        <div onclick = "ShowErrorToast();" class="btn btn--danger">Show error toast</div>
+    </div>
+
+    <script>
+        function toast( {
+            title = '', 
+            message = '', 
+            type = 'infor', 
+            duration = 3000 
+        }){ 
+            const main = document.getElementById('toast');
+
+            const icons = {
+                success: 'fa-solid fa-circle-check',
+                infor: 'fa-solid fa-circle-info',
+                warning: 'fa-solid fa-circle-exclamation',
+                error: 'fa-solid fa-circle-exclamation'
+            }
+
+
+            const icon = icons[type];
+            const delay = (duration/1000).toFixed(2);
+            if(main) {
+                const toast = document.createElement('div');
+                toast.classList.add('toast', `toast--${type}`);
+
+                const autoRemoveID = setTimeout(function () {
+                    main.removeChild(toast);
+                }, duration + 1000);
+                
+                toast.onclick = function (even) {
+                    console.log(even.target);
+                    if(even.target.closest(".toast__close"))
+                    {
+                        main.removeChild(toast);
+                        clearTimeout(autoRemoveID);
+                    }
+                }
+
+                toast.style.animation = `slideInLeft ease .3s, fadeOut linear 1s ${delay}s forwards`;
+                toast.innerHTML = `
+                    <div class="toast__icon">
+                        <i class="${icon}"></i>
+                    </div>
+                    <div class="toast__body">
+                        <h3 class="toast__title">${title}</h3>
+                        <p class="toast__message">${message}</p>
+                    </div>
+                    <div class="toast__close">
+                        <i class="fas fa-times"></i>
+                    </div>
+                `;
+                main.appendChild(toast);
+
+                
+            }
+        }
+
+        
+
+        function ShowSuccessToast(){
+            toast( {
+            title: 'Success',
+            message: 'Facebook để cùng nhau trao đổi trong quá trình học tập',
+            type: "success",
+            duration: 1000
+        })
+        }
+
+        function ShowErrorToast(){
+            toast( {
+            title: 'Error',
+            message: 'Facebook để cùng nhau trao đổi trong quá trình học tập',
+            type: "error",
+            duration: 3000
+        })
+        }
+    </script>
+    
+    
+</body>
+</html>
